@@ -10,15 +10,28 @@ import {
 } from "@chakra-ui/react";
 import { FaRegHeart, FaStar } from "react-icons/fa";
 
-export default function Room() {
+interface RoomProps {
+  imageUrl: string;
+  name: string;
+  rating: number;
+  city: string;
+  country: string;
+  price: number;
+}
+
+export default function Room({
+  imageUrl,
+  name,
+  rating,
+  city,
+  country,
+  price,
+}: RoomProps) {
   const gray = useColorModeValue("gray.600", "gray.200");
   return (
     <VStack alignItems={"flex-start"}>
       <Box position={"relative"} rounded={"3xl"} mb={2} overflow={"hidden"}>
-        <Image
-          minH="280"
-          src="https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/download-23.jpg"
-        />
+        <Image minH="280" src={imageUrl} />
         <Button
           variant={"unstyled"}
           position={"absolute"}
@@ -32,7 +45,7 @@ export default function Room() {
       <Box w="full">
         <Grid gap={2} templateColumns={"6fr 1fr"}>
           <Text as="b" noOfLines={1} fontSize="md">
-            Mineral, Virginia, United States
+            {name}
           </Text>
           <HStack
             _hover={{
@@ -41,15 +54,15 @@ export default function Room() {
             spacing={1}
           >
             <FaStar size={15} />
-            <Text>5.0</Text>
+            <Text>{rating}</Text>
           </HStack>
         </Grid>
         <Text fontSize={"sm"} color={gray}>
-          Seoul, S. Korea
+          {city}, {country}
         </Text>
       </Box>
       <Text fontSize={"sm"} color={gray}>
-        <Text as="b">$72</Text> night
+        <Text as="b">${price}</Text> night
       </Text>
     </VStack>
   );

@@ -10,10 +10,23 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { FaRegHeart, FaStar } from "react-icons/fa";
 import Room from "../components/Room";
+import RoomSkeleton from "../components/RoomSkeleton";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [rooms, setRooms] = useState([]);
+  const fetchRooms = async () => {
+    const response = await fetch("http://localhost:8000/api/v1/rooms/");
+    const json = await response.json();
+    setRooms(json);
+    setIsLoading(false);
+  };
+  useEffect(() => {
+    fetchRooms();
+  }, []);
   return (
     <Grid
       mt={10}
@@ -31,12 +44,27 @@ export default function Home() {
         "2xl": "repeat(5, 1fr)",
       }}
     >
-      <Box>
-        <Skeleton height={280} rounded={"2xl"} mb={7} />
-        <SkeletonText noOfLines={2} w={"50%"} mb={7} />
-        <SkeletonText noOfLines={1} w={"20%"} />
-      </Box>
-      <Room />
+      {isLoading ? (
+        <>
+          <RoomSkeleton />
+          <RoomSkeleton />
+          <RoomSkeleton />
+          <RoomSkeleton />
+          <RoomSkeleton />
+          <RoomSkeleton />
+          <RoomSkeleton />
+          <RoomSkeleton />
+        </>
+      ) : null}
+      {rooms.map((room) => (
+        <Room
+          name={room.name}
+          rating={room.rating}
+          city={room.city}
+          country={room.country}
+          price={room.price}
+        />
+      ))}
     </Grid>
   );
 }
