@@ -1,17 +1,6 @@
-import {
-    Box,
-    Button,
-    Grid,
-    Heading,
-    HStack,
-    Image,
-    Skeleton,
-    SkeletonText,
-    Text,
-    VStack,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { FaRegHeart, FaStar } from "react-icons/fa";
+import { Grid } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import { getRooms } from "../api";
 import Room from "../components/Room";
 import RoomSkeleton from "../components/RoomSkeleton";
 
@@ -32,17 +21,7 @@ interface IRoom {
 }
 
 export default function Home() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [rooms, setRooms] = useState<IRoom[]>([]);
-    const fetchRooms = async () => {
-        const response = await fetch("http://localhost:8000/api/v1/rooms/");
-        const json = await response.json();
-        setRooms(json);
-        setIsLoading(false);
-    };
-    useEffect(() => {
-        fetchRooms();
-    }, []);
+    const { isLoading, data: rooms } = useQuery<IRoom[]>(["rooms"], getRooms);
     return (
         <Grid
             mt={10}
@@ -72,7 +51,7 @@ export default function Home() {
                     <RoomSkeleton />
                 </>
             ) : null}
-            {rooms.map((room) => (
+            {rooms?.map((room) => (
                 <Room
                     imageUrl={room.photos[0].file}
                     name={room.name}
