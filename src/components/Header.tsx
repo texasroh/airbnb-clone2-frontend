@@ -28,7 +28,7 @@ export default function Header() {
   const Icon = useColorModeValue(FaMoon, FaSun);
   return (
     <HStack
-      px={10}
+      px={40}
       py={5}
       borderBottomWidth={1}
       justifyContent={"space-between"}
