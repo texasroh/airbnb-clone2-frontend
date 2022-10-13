@@ -1,6 +1,7 @@
 import {
     Avatar,
     Box,
+    Container,
     Grid,
     GridItem,
     Heading,
@@ -94,7 +95,7 @@ export default function RoomDetail() {
                 />
             </HStack>
             <Box mt={10}>
-                <Heading fontSize={"2xl"}>
+                <Heading mb={5} fontSize={"2xl"}>
                     <HStack>
                         <FaStar />
                         <Text>{room?.rating}</Text>
@@ -105,6 +106,34 @@ export default function RoomDetail() {
                         </Text>
                     </HStack>
                 </Heading>
+                <Container mt={15} maxW={"container.lg"} mx="none">
+                    <Grid gap={10} templateColumns={"1fr 1fr"}>
+                        {reviews?.map((review, index) => (
+                            <VStack key={index} alignItems={"flex-start"}>
+                                <HStack>
+                                    <Avatar
+                                        name={review.user.name}
+                                        src={review.user.avatar}
+                                        size={"md"}
+                                    />
+                                    <VStack
+                                        alignItems={"flex-start"}
+                                        spacing={0}
+                                    >
+                                        <Heading fontSize={"md"}>
+                                            {review.user.name}
+                                        </Heading>
+                                        <HStack spacing={1}>
+                                            <FaStar size="12px" />
+                                            <Text>{review.rating}</Text>
+                                        </HStack>
+                                    </VStack>
+                                </HStack>
+                                <Text>{review.payload}</Text>
+                            </VStack>
+                        ))}
+                    </Grid>
+                </Container>
             </Box>
         </Box>
     );
