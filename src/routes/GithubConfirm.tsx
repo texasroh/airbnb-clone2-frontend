@@ -22,10 +22,9 @@ export default function GithubConfirm() {
                 });
                 queryClient.refetchQueries(["me"]);
                 navigate("/");
-                // return;
+                return;
             }
         }
-        console.log("hello");
         toast({
             title: "Github Login Fail",
             status: "error",
