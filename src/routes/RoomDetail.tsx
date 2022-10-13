@@ -15,7 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { getRoom, getRoomReviews } from "../api";
-import { IRoomDetail } from "../types";
+import { IReview, IRoomDetail } from "../types";
 
 export default function RoomDetail() {
     const { roomPk } = useParams();
@@ -24,7 +24,7 @@ export default function RoomDetail() {
         getRoom
     );
 
-    const { isLoading: isReviewsLoading, data: reviews } = useQuery(
+    const { isLoading: isReviewsLoading, data: reviews } = useQuery<IReview[]>(
         ["rooms", roomPk, "reviews"],
         getRoomReviews
     );
@@ -97,7 +97,12 @@ export default function RoomDetail() {
                 <Heading fontSize={"2xl"}>
                     <HStack>
                         <FaStar />
-                        {room?.rating}
+                        <Text>{room?.rating}</Text>
+                        <Text>•</Text>
+                        <Text>
+                            {reviews?.length} review
+                            {reviews?.length === 1 ? "" : "s"}
+                        </Text>
                     </HStack>
                 </Heading>
             </Box>
