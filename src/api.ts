@@ -31,8 +31,10 @@ export const getRoomReviews = ({ queryKey }: QueryFunctionContext) => {
         .then((response) => response.data);
 };
 
-export const getMe = () =>
-    instance.get("/users/me").then((response) => response.data);
+export const getMe = () => {
+    console.log(Cookie.get("sessionid"));
+    return instance.get("/users/me").then((response) => response.data);
+};
 
 export const logOut = () =>
     instance
@@ -47,6 +49,19 @@ export const githubLogIn = (code: string) =>
     instance
         .post(
             "/users/github",
+            { code },
+            {
+                headers: {
+                    "X-CSRFToken": Cookie.get("csrftoken") || "",
+                },
+            }
+        )
+        .then((response) => response.status);
+
+export const kakaoLogIn = (code: string) =>
+    instance
+        .post(
+            "/users/kakao",
             { code },
             {
                 headers: {
