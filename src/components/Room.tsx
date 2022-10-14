@@ -40,7 +40,7 @@ export default function Room({
                     mb={2}
                     overflow={"hidden"}
                 >
-                    <Image minH="280" src={imageUrl} />
+                    <Image minH="280" src={imageUrl} objectFit={"cover"} />
                     <Button
                         variant={"unstyled"}
                         position={"absolute"}

@@ -1,6 +1,7 @@
 import Cookie from "js-cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import axios from "axios";
+import { IUsernameLoginVariables } from "./types";
 
 const instance = axios.create({
     baseURL: "http://localhost:8000/api/v1",
@@ -32,7 +33,6 @@ export const getRoomReviews = ({ queryKey }: QueryFunctionContext) => {
 };
 
 export const getMe = () => {
-    console.log(Cookie.get("sessionid"));
     return instance.get("/users/me").then((response) => response.data);
 };
 
@@ -70,3 +70,19 @@ export const kakaoLogIn = (code: string) =>
             }
         )
         .then((response) => response.status);
+
+export const usernameLogIn = ({
+    username,
+    password,
+}: IUsernameLoginVariables) =>
+    instance
+        .post(
+            "/users/log-in",
+            { username, password },
+            {
+                headers: {
+                    "X-CSRFToken": Cookie.get("csrftoken") || "",
+                },
+            }
+        )
+        .then((response) => response.data);
