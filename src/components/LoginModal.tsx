@@ -12,6 +12,7 @@ import {
   ModalOverlay,
   VStack,
 } from "@chakra-ui/react";
+import React, { useRef } from "react";
 import { FaLock, FaUserNinja } from "react-icons/fa";
 import SocialLogin from "./SocialLogin";
 
@@ -21,13 +22,19 @@ interface LoginModalProps {
 }
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const onSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(usernameRef.current?.value);
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Log in</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody as="form" onSubmit={onSubmit as any}>
           <VStack>
             <InputGroup>
               <InputLeftElement
@@ -37,7 +44,13 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                   </Box>
                 }
               />
-              <Input variant={"filled"} placeholder="Username" />
+              <Input
+                ref={usernameRef}
+                required
+                name="username"
+                variant={"filled"}
+                placeholder="Username"
+              />
             </InputGroup>
             <InputGroup>
               <InputLeftElement
@@ -48,13 +61,16 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 }
               />
               <Input
+                ref={passwordRef}
+                required
+                name="password"
                 variant={"filled"}
                 placeholder="Password"
-                type={"password"}
+                type="password"
               />
             </InputGroup>
           </VStack>
-          <Button mt={4} colorScheme={"red"} w="100%">
+          <Button type="submit" mt={4} colorScheme={"red"} w="100%">
             Log in
           </Button>
           <SocialLogin />
