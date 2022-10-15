@@ -1,77 +1,80 @@
 export interface IRoomPhotoPhoto {
-    pk: string;
-    file: string;
-    description: string;
+  pk: string;
+  file: string;
+  description: string;
 }
 
 export interface IRoomList {
-    pk: number;
-    name: string;
-    country: string;
-    city: string;
-    price: number;
-    rating: number;
-    is_owner: boolean;
-    photos: IRoomPhotoPhoto[];
+  pk: number;
+  name: string;
+  country: string;
+  city: string;
+  price: number;
+  rating: number;
+  is_owner: boolean;
+  photos: IRoomPhotoPhoto[];
 }
 
 export interface IRoomOwner {
-    name: string;
-    avatar: string;
-    username: string;
+  name: string;
+  avatar: string;
+  username: string;
 }
 
 export interface IAmenity {
-    name: string;
-    description: string;
+  name: string;
+  description: string;
 }
 
 export interface IRoomDetail extends IRoomList {
-    created_at: string;
-    updated_at: string;
-    rooms: number;
-    toilets: number;
-    description: string;
-    address: string;
-    pet_friendly: true;
+  created_at: string;
+  updated_at: string;
+  rooms: number;
+  toilets: number;
+  description: string;
+  address: string;
+  pet_friendly: true;
+  kind: string;
+  is_owner: boolean;
+  is_liked: boolean;
+  category: {
+    name: string;
     kind: string;
-    is_owner: boolean;
-    is_liked: boolean;
-    category: {
-        name: string;
-        kind: string;
-    };
-    owner: IRoomOwner;
-    amenities: IAmenity[];
+  };
+  owner: IRoomOwner;
+  amenities: IAmenity[];
 }
 
 export interface IReview {
-    payload: string;
-    rating: number;
-    user: IRoomOwner;
+  payload: string;
+  rating: number;
+  user: IRoomOwner;
 }
 
 export interface IUser {
-    last_login: string;
-    username: string;
-    email: string;
-    date_joined: string;
-    avatar: string;
-    name: string;
-    is_host: boolean;
-    gender: string;
-    language: string;
-    currency: string;
+  last_login: string;
+  username: string;
+  email: string;
+  date_joined: string;
+  avatar: string;
+  name: string;
+  is_host: boolean;
+  gender: string;
+  language: string;
+  currency: string;
 }
 
 export interface IUsernameLoginVariables {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 }
 
 export interface IUsernameLoginSuccess {
-    ok: string;
+  ok: string;
 }
 export interface IUsernameLoginError {
-    error: string;
+  error: string;
+}
+export interface IProtectedPageProps {
+  children: React.ReactNode;
 }

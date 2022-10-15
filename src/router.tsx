@@ -5,31 +5,35 @@ import Home from "./routes/Home";
 import KakaoConfirm from "./routes/KakaoConfirm";
 import NotFound from "./routes/NotFound";
 import RoomDetail from "./routes/RoomDetail";
+import UploadRoom from "./routes/UploadRoom";
 
 const router = createBrowserRouter([
-    {
+  {
+    path: "",
+    element: <Root />,
+    errorElement: <NotFound />,
+    children: [
+      {
         path: "",
-        element: <Root />,
+        element: <Home />,
+      },
+      {
+        path: "rooms",
+        children: [
+          { path: "upload", element: <UploadRoom /> },
+          { path: ":roomPk", element: <RoomDetail /> },
+        ],
+      },
+      {
+        path: "social",
         errorElement: <NotFound />,
         children: [
-            {
-                path: "",
-                element: <Home />,
-            },
-            {
-                path: "rooms/:roomPk",
-                element: <RoomDetail />,
-            },
-            {
-                path: "social",
-                errorElement: <NotFound />,
-                children: [
-                    { path: "github", element: <GithubConfirm /> },
-                    { path: "kakao", element: <KakaoConfirm /> },
-                ],
-            },
+          { path: "github", element: <GithubConfirm /> },
+          { path: "kakao", element: <KakaoConfirm /> },
         ],
-    },
+      },
+    ],
+  },
 ]);
 
 export default router;
